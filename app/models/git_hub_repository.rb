@@ -10,6 +10,14 @@ class GitHubRepository
 
   # Public
   #
+  def add_collaborator(collaborator)
+    with_error_handling do
+      @client.add_collaborator(@id, collaborator, headers: { accept: 'application/vnd.github.barred-rock-preview' })
+    end
+  end
+
+  # Public
+  #
   def full_name
     with_error_handling { @client.repository(@id).full_name }
   end
