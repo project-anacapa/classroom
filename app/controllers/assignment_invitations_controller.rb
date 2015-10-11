@@ -29,8 +29,11 @@ class AssignmentInvitationsController < ApplicationController
   helper_method :assignment
 
   def assignment_repo
-    repo_access = current_user.repo_accesses.find_by(organization: organization)
-    @assignment_repo ||= AssignmentRepo.find_by(assignment: assignment, repo_access: repo_access)
+    if (repo_access = current_user.repo_accesses.find_by(organization: organization))
+      @assignment_repo ||= AssignmentRepo.find_by(assignment: assignment, repo_access: repo_access)
+    else
+      @assignment_repo ||= AssignmentRepo.find_by(assignment: assignment, user: current_user)
+    end
   end
   helper_method :assignment_repo
 
