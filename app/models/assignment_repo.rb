@@ -38,7 +38,7 @@ class AssignmentRepo < ActiveRecord::Base
   # Public
   #
   def github_team_id
-    repo_access.github_team_id
+    repo_access.present? ? repo_access.github_team_id : nil
   end
 
   # Public
