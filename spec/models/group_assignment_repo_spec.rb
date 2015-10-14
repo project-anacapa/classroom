@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe GroupAssignmentRepo, type: :model do
   context 'with created objects', :vcr do
-    let(:organization) { GitHubFactory.create_owner_classroom_org                                      }
-    let(:repo_access)  { RepoAccess.create(user: organization.users.first, organization: organization) }
+    let(:organization) { GitHubFactory.create_owner_classroom_org }
+    let(:student)      { GitHubFactory.create_classroom_student   }
+    let(:repo_access)  { RepoAccess.create(user: student, organization: organization) }
 
     let(:grouping)     { Grouping.create(organization: organization, title: 'Grouping 1') }
     let(:group)        { Group.create(title: 'Group 1', grouping: grouping) }
@@ -13,7 +14,8 @@ RSpec.describe GroupAssignmentRepo, type: :model do
                              grouping: grouping,
                              title: 'Learn JavaScript',
                              organization: organization,
-                             public_repo: false)
+                             public_repo: false,
+                             starter_code_repo_id: 1_062_897)
     end
 
     before(:each) do
@@ -34,9 +36,13 @@ RSpec.describe GroupAssignmentRepo, type: :model do
             assert_requested :post, github_url("/organizations/#{organization.github_id}/repos")
           end
         end
-      end
 
-      describe 'before_create' do
+        describe '#push_starter_code' do
+          it 'pushes the starter code to the GitHub repository' do
+            assert_requested :put, github_url("/repositories/#{@group_assignment_repo.github_repo_id}/import")
+          end
+        end
+
         describe '#add_team_to_github_repository' do
           it 'adds the team to the repository' do
             github_repo = GitHubRepository.new(organization.github_client, @group_assignment_repo.github_repo_id)
