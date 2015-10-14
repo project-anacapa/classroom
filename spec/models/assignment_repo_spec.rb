@@ -38,9 +38,9 @@ RSpec.describe AssignmentRepo, type: :model do
         describe '#adds_user_as_collaborator' do
           it 'adds the user as a collaborator to the GitHub repository' do
             github_user_login = GitHubUser.new(student.github_client, student.uid).login
-            request = "/repositories/#{@assignment_repo.github_repo_id}/collaborators/#{github_user_login}"
+            add_user_request = "/repositories/#{@assignment_repo.github_repo_id}/collaborators/#{github_user_login}"
 
-            assert_requested :put, github_url(request)
+            assert_requested :put, github_url(add_user_request)
           end
         end
       end

@@ -51,12 +51,7 @@ RSpec.describe AssignmentInvitationsController, type: :controller do
 
     it 'redeems the users invitation' do
       patch :accept_invitation, id: invitation.key
-
-      assert_requested :post, github_url("/organizations/#{organization.github_id}/teams")
-      assert_requested :post, github_url("/organizations/#{organization.github_id}/repos")
-
-      expect(assignment.assignment_repos.count).to eql(1)
-      expect(user.repo_accesses.count).to eql(1)
+      expect(user.assignment_repos.count).to eql(1)
     end
 
     context 'github repository creation fails' do
@@ -83,7 +78,7 @@ RSpec.describe AssignmentInvitationsController, type: :controller do
       it 'removes the repository on GitHub' do
         patch :accept_invitation, id: invitation.key
 
-        assert_requested :delete, github_url('/repositories/43894381')
+        assert_requested :delete, github_url('/repositories/44262216')
       end
     end
   end
