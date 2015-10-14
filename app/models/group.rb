@@ -16,6 +16,14 @@ class Group < ActiveRecord::Base
   validates :title, presence: true
   validates :title, length: { maximum: 39 }
 
+  before_validation(on: :create) do
+    if organization
+      create_github_team
+    end
+  end
+
+  before_destroy :silently_destroy_github_team
+
   private
 
   # Internal
