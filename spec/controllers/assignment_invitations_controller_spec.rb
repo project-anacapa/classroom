@@ -46,7 +46,6 @@ RSpec.describe AssignmentInvitationsController, type: :controller do
 
     after(:each) do
       AssignmentRepo.destroy_all
-      RepoAccess.destroy_all
     end
 
     it 'redeems the users invitation' do
