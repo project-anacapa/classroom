@@ -4,3 +4,7 @@ stack = Faraday::RackBuilder.new do |builder|
   builder.adapter Faraday.default_adapter
 end
 Octokit.middleware = stack
+
+Octokit.configure do |c|
+  c.api_endpoint = "https://github.ucsb.edu/api/v3/"
+end
