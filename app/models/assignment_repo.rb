@@ -45,4 +45,11 @@ class AssignmentRepo < ActiveRecord::Base
   def starter_code_repo_id
     assignment.starter_code_repo_id
   end
+
+  # Public
+  #
+  def push_webhook
+    assignment.push_webhook
+  end
+
 end

@@ -47,4 +47,10 @@ class GroupAssignmentRepo < ActiveRecord::Base
   def starter_code_repo_id
     group_assignment.starter_code_repo_id
   end
+
+  # Public
+  #
+  def push_webhook
+    group_assignment.push_webhook
+  end
 end

@@ -29,6 +29,25 @@ class GitHubRepository
 
   # Public
   #
+  def set_push_webhook(url)
+    with_error_handling do
+      @client.create_hook(
+      @id,
+      'web',
+      {
+        :url => url,
+        :content_type => 'json'
+      },
+      {
+        :events => ['push', 'pull_request'],
+        :active => true
+      }
+      )
+    end
+  end
+
+  # Public
+  #
   def repository(full_repo_name = nil)
     with_error_handling do
       @client.repository(full_repo_name || @id)

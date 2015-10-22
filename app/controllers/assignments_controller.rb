@@ -54,7 +54,7 @@ class AssignmentsController < ApplicationController
   def new_assignment_params
     params
       .require(:assignment)
-      .permit(:title, :public_repo)
+      .permit(:title, :public_repo, :push_webhook)
       .merge(creator: current_user,
              organization: @organization,
              starter_code_repo_id: starter_code_repository_id(params[:repo_name]))
@@ -67,7 +67,7 @@ class AssignmentsController < ApplicationController
   def update_assignment_params
     params
       .require(:assignment)
-      .permit(:title, :public_repo)
+      .permit(:title, :public_repo, :push_webhook)
       .merge(starter_code_repo_id: starter_code_repository_id(params[:repo_name]))
   end
 end

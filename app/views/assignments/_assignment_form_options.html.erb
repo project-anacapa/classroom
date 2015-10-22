@@ -21,3 +21,8 @@
   <dt><label>Add your starter code from GitHub <small>(optional)</small> </label></dt>
   <dd><input class="textfield" type="text" name="repo_name" value="<%= assignment.full_name %>" placeholder="<%= assignment.full_name || 'e.g. education/classroom'%>"</dd>
 </dl>
+
+<dl class="form">
+  <dt><label>Add a push webhook url to add to each student repository <small>(optional)</small> </label></dt>
+  <dd><%= f.text_field :push_webhook, :placeholder =>  'e.g. https://www.example.edu/callback' %> </dd>
+</dl>

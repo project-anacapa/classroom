@@ -6,6 +6,7 @@ module GitHubRepoable
       if organization
         create_github_repository
         push_starter_code
+        set_push_webhook
       end
     end
 
@@ -64,6 +65,24 @@ module GitHubRepoable
       raise GitHub::Error, 'Failed to create repository on GitHub, please try again'
     end
   end
+
+  # Public
+  #
+  def set_push_webhook
+    return true unless push_webhook
+
+    client = creator.github_client
+
+    assignment_repository   = GitHubRepository.new(client, github_repo_id)
+
+    begin
+      assignment_repository.set_push_webhook(push_webhook)
+    rescue GitHub::Error
+      destroy_github_repository
+      raise GitHub::Error, 'Failed to create repository on GitHub, please try again'
+    end
+  end
+
 
   # Internal
   #
